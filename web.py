@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 import pandas as pd
 from datetime import datetime
 import os
@@ -31,7 +31,25 @@ def tv_webhook():
 def healthcheck():
     return "✅ TradingView Webhook Server Active"
 
+@app.route("/alerts", methods=["GET"])
+def download_csv():
+    if os.path.exists(LOG_FILE):
+        return send_file(LOG_FILE, as_attachment=True)
+    else:
+        return "No alert log found.", 404
+
+@app.route("/alerts/json", methods=["GET"])
+def return_json():
+    if os.path.exists(LOG_FILE):
+        df = pd.read_csv(LOG_FILE)
+        return jsonify(df.to_dict(orient="records"))
+    else:
+        return jsonify([])
+
+@app.route("/enrich", methods=["POST"])
+def enrich_alerts():
+    # Placeholder for future enrichment (ETF mapping, confidence scoring, etc.)
+    return jsonify({"status": "placeholder", "message": "Enrichment logic will go here."})
+
 if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+    app.run()
