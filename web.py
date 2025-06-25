@@ -48,9 +48,8 @@ def return_json():
 
 @app.route("/enrich", methods=["POST"])
 def enrich_alerts():
-    # Placeholder for future enrichment (ETF mapping, confidence scoring, etc.)
     return jsonify({"status": "placeholder", "message": "Enrichment logic will go here."})
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))  # Required for Render compatibility
+    port = int(os.environ.get("PORT", 5000))  # default to 5000, but Render sets PORT
     app.run(host="0.0.0.0", port=port)
