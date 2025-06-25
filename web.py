@@ -51,8 +51,6 @@ def enrich_alerts():
     # Placeholder for future enrichment (ETF mapping, confidence scoring, etc.)
     return jsonify({"status": "placeholder", "message": "Enrichment logic will go here."})
 
-import os
-
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 10000))  # Render will set this PORT
+    port = int(os.environ.get("PORT", 10000))  # Required for Render compatibility
     app.run(host="0.0.0.0", port=port)
