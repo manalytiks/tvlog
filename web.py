@@ -19,7 +19,7 @@ def tv_webhook():
 
     try:
         df = pd.read_csv(LOG_FILE)
-    except:
+    except Exception:
         df = pd.DataFrame(columns=row.keys())
 
     df = pd.concat([df, pd.DataFrame([row])], ignore_index=True)
@@ -51,5 +51,5 @@ def enrich_alerts():
     return jsonify({"status": "placeholder", "message": "Enrichment logic will go here."})
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # default to 5000, but Render sets PORT
-    app.run(host="0.0.0.0", port=port)
+    port = int(os.environ.get("PORT", 5000))  # ✅ Let Render inject the port
+    app.run(host="0.0.0.0", port=port)        # ✅ Expose to all interfaces
